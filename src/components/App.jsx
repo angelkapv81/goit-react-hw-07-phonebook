@@ -1,16 +1,17 @@
-export const App = () => {
+import { GlobalStyle } from './GlobalStyle';
+import Form from './Form/Form';
+import Search from './Search/Search';
+import Contacts from './Contacts/Contacts';
+
+function App() {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <section>
+      <Form />
+      <Search />
+      <Contacts />
+      <GlobalStyle />
+    </section>
   );
-};
+}
+
+export default App;
