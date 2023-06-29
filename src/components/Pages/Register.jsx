@@ -1,48 +1,74 @@
-import React from 'react';
+import { signUp } from 'Api';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleNameChange = e => {
+    setName(e.target.value);
+  };
+
+  const handleEmailChange = e => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = e => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    signUp({ name, email, password })
+      .then(() => {
+        navigate('/login');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    // console.log('Submitted:', name, email, password);
+    // тут повідомлення про успішну реєстрацію
+  };
+
   return (
     <div>
-      сторінка для реєстрації
-      <form
-      // onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit}>
         <label>
-          Ім'я:
+          Name:
           <input
-            type="text"
-            // value={name} onChange={handleNameChange}
+            type="name"
+            name="name"
+            value={name}
+            onChange={handleNameChange}
           />
         </label>
         <br />
         <label>
-          Електронна пошта:
+          Email:
           <input
+            name="email"
             type="email"
-            // value={email}
-            // onChange={handleEmailChange}
+            value={email}
+            onChange={handleEmailChange}
           />
         </label>
         <br />
         <label>
-          Пароль:
+          Password min 8 symbols:
           <input
-            type="text"
-            // value={email}
-            // onChange={handleEmailChange}
+            name="password"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
           />
         </label>
         <br />
-        <label>
-          Повторити пароль:
-          <input
-            type="text"
-            // value={email}
-            // onChange={handleEmailChange}
-          />
-        </label>
-        <br />
-        <button type="submit">Зареєструватися</button>
+        <button type="submit" disabled={!name || !email || !password}>
+          Зареєструватися
+        </button>
       </form>
     </div>
   );
